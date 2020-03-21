@@ -41,31 +41,27 @@
             android:text="ID: AFEG-5UB8-JS06"
             />
 
+        <ImageView
+            android:id="@+id/qr_image"
+            android:layout_width="match_parent"
+            android:layout_height="400px"
+            android:contentDescription="@string/userqr"
+            android:textAlignment="center" />
+
         <Button
             android:id="@+id/getInTouchButton"
-            android:layout_width="152dp"
+            android:layout_width="match_parent"
             android:layout_height="100px"
-            android:layout_marginTop="328dp"
-            android:layout_marginEnd="160dp"
-            android:paddingTop="20px"
+            android:layout_marginLeft="200px"
+            android:layout_marginRight="200px"
             android:text="@string/getInTouch"
             android:textAlignment="center"
             android:onClick="melden"/>
 
-        <ImageView
-            android:id="@+id/qr_image"
-            android:layout_width="match_parent"
-            android:layout_height="100px"
-            android:layout_marginTop="204dp"
-            android:layout_marginEnd="96dp"
-            android:contentDescription="@string/userqr"
-            android:paddingTop="20px"
-            android:textAlignment="center" />
-
         <TextView
             android:id="@+id/urlPlatzHalter"
             android:layout_width="match_parent"
-            android:layout_height="100px"
+            android:layout_height="200px"
             android:paddingTop="20px"
             android:text="@string/bestPracticesPlaceholder"
             android:textAlignment="center"
