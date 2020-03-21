@@ -11,8 +11,21 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.google.zxing.WriterException;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.concurrent.ExecutionException;
 
 import androidmads.library.qrgenearator.QRGContents;
 import androidmads.library.qrgenearator.QRGEncoder;
@@ -20,6 +33,7 @@ import androidmads.library.qrgenearator.QRGEncoder;
 public class MainActivity extends AppCompatActivity {
 
     String uid;
+    String jwt;
     private ImageView qrImage;
     private QRGEncoder qrgEncoder;
     String TAG = "GenerateQR";
@@ -36,12 +50,28 @@ public class MainActivity extends AppCompatActivity {
         editor = preferences.edit();
 
         if(preferences.getString(getString(R.string.userId), null)==null){
-            //TODO implement rest call to get user id
-            //uid=
-            //editor.putString(getString(R.string.userId), uid);
-            //editor.commit();
+
+            String json = null;
+            try {
+                json = new AsyncReceiveJsonRegisterTask().execute().get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Log.d("CoronaTrackingApp", "Received json: " + json);
+            uid = extractUidFromJson(json);
+            Log.d("CoronaTrackingApp", "Extracted uid: " + uid);
+            jwt = extractJwtFromJson(json);
+            Log.d("CoronaTrackingApp", "Extracted jwt: " + jwt);
+
+            Toast.makeText(this, uid, Toast.LENGTH_LONG).show();
+            editor.putString(getString(R.string.userId), uid);
+            editor.putString(getString(R.string.jwt), jwt);
+            editor.commit();
         }else{
             uid = preferences.getString(getString(R.string.userId),null);
+            jwt = preferences.getString(getString(R.string.jwt),null);
         }
 
         WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
@@ -64,6 +94,36 @@ public class MainActivity extends AppCompatActivity {
         } catch (WriterException e) {
             Log.v(TAG, e.toString());
         }
+    }
+
+    private String extractUidFromJson(String jsonString) {
+        if (jsonString != null) {
+            try {
+                JSONObject jsonObj = new JSONObject(jsonString);
+                JSONObject payloadJsonObj = jsonObj.getJSONObject("payload");
+                String userId = payloadJsonObj.getString(getString(R.string.userId));
+                return userId;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return "-1";
+    }
+
+    private String extractJwtFromJson(String jsonString) {
+        if (jsonString != null) {
+            try {
+                JSONObject jsonObj = new JSONObject(jsonString);
+                JSONObject payloadJsonObj = jsonObj.getJSONObject("payload");
+                String jwt = payloadJsonObj.getString(getString(R.string.jwt));
+                return jwt;
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+        return "-1";
     }
 
     public void melden(View view){

@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature android:name="android.hardware.camera"/>
     <uses-feature android:name="android.hardware.camera.autofocus"/>
 
@@ -13,7 +14,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity android:name=".WarningActivity"></activity>
         <activity android:name=".QRScanActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".MainActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
