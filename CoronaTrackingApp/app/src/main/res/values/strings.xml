@@ -1,10 +1,12 @@
 <resources>
     <string name="app_name">CoronaTrackingApp</string>
 
+    <string name="userId">userId</string>
     <string name="getInTouch">Melden</string>
     <string name="bestPracticesPlaceholder">Best Practices:  \n Wie kann ich mich schützen?</string>
     <string name="back">Zurück</string>
     <string name="userIdEditTextHint">Oder nutzen sie die Nutzer-ID</string>
     <string name="coronaContactNotificationText">Sie waren in nahem Kontakt zu einem Corona-Patienten. Bitte melden sie sich umgehend bei dem Gesundheitsamt unter der folgenden Telefonnummer: \n\n 089...</string>
+    <string name="userqr">QR-Code vom Nutzer</string>
 
 </resources>

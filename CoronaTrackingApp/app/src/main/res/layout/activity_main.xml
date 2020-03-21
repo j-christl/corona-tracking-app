@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="120dp"
-        android:layout_marginBottom="536dp"
+        android:layout_marginBottom="580dp"
         android:ems="10"
         android:text="ID: AFEG-5UB8-JS06"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -21,7 +21,7 @@
         android:id="@+id/getInTouchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="328dp"
         android:layout_marginEnd="160dp"
         android:text="@string/getInTouch"
         app:layout_constraintEnd_toEndOf="parent"
@@ -36,5 +36,15 @@
         android:text="@string/bestPracticesPlaceholder"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/getInTouchButton" />
+
+    <ImageView
+        android:id="@+id/qr_image"
+        android:layout_width="218dp"
+        android:layout_height="226dp"
+        android:layout_marginTop="204dp"
+        android:layout_marginEnd="96dp"
+        android:contentDescription="@string/userqr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>
