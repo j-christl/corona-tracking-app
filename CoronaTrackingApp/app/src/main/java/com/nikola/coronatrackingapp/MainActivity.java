@@ -1,5 +1,6 @@
 package com.nikola.coronatrackingapp;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
@@ -7,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Display;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
@@ -62,5 +64,10 @@ public class MainActivity extends AppCompatActivity {
         } catch (WriterException e) {
             Log.v(TAG, e.toString());
         }
+    }
+
+    public void melden(View view){
+        Intent intent = new Intent(this, QRScanActivity.class);
+        startActivity(intent);
     }
 }
