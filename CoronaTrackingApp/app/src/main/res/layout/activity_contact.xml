@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ContactActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@mipmap/bg">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="#00C32D"
+            android:text="Verbindungsstatus: Verbunden"
+            android:textAlignment="center"
+            android:paddingTop="20px"></TextView>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="100px"
+            android:background="#D39D0B"
+            android:text="Standortdaten: An"
+            android:textAlignment="center"
+            android:paddingTop="20px"></TextView>
+        
+        <TextView
+            android:layout_width="700px"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="400px"
+            android:text="Sie waren in nahem Kontakt zu einem Corona-Patienten. Bitte geben Sie Ihren Namen und Ihre Telefonnummer an. Das Gesundheitsamt wird sich sobald möglich bei Ihnen melden"
+            android:textColor="#000000"
+            android:background="#FFFFFF"></TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200px"
+            android:layout_marginTop="200px"
+            android:text="Name:"
+            android:textColor="#000000"></TextView>
+        
+        <EditText
+            android:layout_width="500px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200px"
+            android:textColor="#000000"></EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200px"
+            android:layout_marginTop="50px"
+            android:text="Telefonnummer"
+            android:textColor="#000000"></TextView>
+
+        <EditText
+            android:layout_width="500px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200px"
+            android:textColor="#000000"></EditText>
+        
+        <Button
+            android:layout_width="300px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200px"
+            android:layout_marginTop="50px"
+            android:text="Absenden"
+            android:id="@+id/buttonSend"></Button>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
