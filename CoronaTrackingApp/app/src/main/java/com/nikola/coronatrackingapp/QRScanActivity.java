@@ -31,13 +31,12 @@ import java.io.IOException;
 import java.util.HashSet;
 import java.util.Set;
 
-public class QRScanActivity extends AppCompatActivity {
-    ImageView imageView;
-    Button back;
-    Button done;
-    SurfaceView surfaceView;
-    TextView qrValue;
-    EditText editText;
+public class QRScanActivity extends AppCompatActivity implements ActivityCompat.OnRequestPermissionsResultCallback {
+    private Button back;
+    private Button done;
+    private SurfaceView surfaceView;
+    private TextView qrValue;
+    private EditText editText;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
@@ -55,10 +54,8 @@ public class QRScanActivity extends AppCompatActivity {
     private void initViews() {
         qrValue = findViewById(R.id.qrValue);
         surfaceView = findViewById(R.id.surfaceView);
-
         back = findViewById(R.id.backButton);
         done = findViewById(R.id.done);
-        imageView = findViewById(R.id.imageView);
         editText = findViewById(R.id.editText);
 
         back.setOnClickListener(new View.OnClickListener() {
@@ -139,6 +136,11 @@ public class QRScanActivity extends AppCompatActivity {
                                 ImageView imageView = findViewById(R.id.imageView);
                                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_black_24dp));
                                 imageView.setColorFilter(Color.GREEN);
+
+                                TextView succesTextLabel = findViewById(R.id.successTextLabel);
+                                succesTextLabel.setTextColor(Color.GREEN);
+                                succesTextLabel.setText("User-ID erkannt");
+
                                 cameraSource.stop();
                             } catch (Exception e){
                                 Log.d("ERROR", "Wrong user id format");
@@ -149,6 +151,10 @@ public class QRScanActivity extends AppCompatActivity {
                                 imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_clear_black_24dp));
                                 imageView.setColorFilter(Color.RED);
 
+                                final TextView succesTextLabel = findViewById(R.id.successTextLabel);
+                                succesTextLabel.setTextColor(Color.RED);
+                                succesTextLabel.setText("Keine gültige User-ID!");
+
                                 new CountDownTimer(1000, 1000) {
 
                                     public void onTick(long millisUntilFinished) {
@@ -156,6 +162,8 @@ public class QRScanActivity extends AppCompatActivity {
 
                                     public void onFinish() {
                                         imageView.setImageDrawable(null);
+                                        succesTextLabel.setTextColor(Color.BLACK);
+                                        succesTextLabel.setText("Suche QR-Code");
                                     }
                                 }.start();
                             }
@@ -224,6 +232,13 @@ public class QRScanActivity extends AppCompatActivity {
         } catch (NumberFormatException e){
             return false;
         }
+    }
+
+    public void onRequestPermissionsResult(int requestCode,
+                                           String[] permissions,
+                                           int[] grantResults){
+        Intent intent = new Intent(this, QRScanActivity.class);
+        startActivity(intent);
     }
 }
 
