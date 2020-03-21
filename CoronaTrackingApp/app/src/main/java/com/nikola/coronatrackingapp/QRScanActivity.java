@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -14,6 +16,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,15 +32,16 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class QRScanActivity extends AppCompatActivity {
-
-    Button retry;
+    ImageView imageView;
     Button back;
     Button done;
     SurfaceView surfaceView;
     TextView qrValue;
+    EditText editText;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,22 +49,17 @@ public class QRScanActivity extends AppCompatActivity {
         setContentView(R.layout.activity_q_r_scan);
 
         initViews();
+        initialiseDetectorsAndSources();
     }
 
     private void initViews() {
         qrValue = findViewById(R.id.qrValue);
         surfaceView = findViewById(R.id.surfaceView);
 
-        retry = findViewById(R.id.retry);
         back = findViewById(R.id.backButton);
         done = findViewById(R.id.done);
-
-        retry.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                retry();
-            }
-        });
+        imageView = findViewById(R.id.imageView);
+        editText = findViewById(R.id.editText);
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -100,8 +101,6 @@ public class QRScanActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
-
             }
 
             @Override
@@ -136,12 +135,29 @@ public class QRScanActivity extends AppCompatActivity {
                                 qrValue.setText(userId);
                                 qrValue.setTextColor(Color.GREEN);
 
-                                storeUserId(userId);
+
+                                ImageView imageView = findViewById(R.id.imageView);
+                                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_check_black_24dp));
+                                imageView.setColorFilter(Color.GREEN);
                                 cameraSource.stop();
-                            } catch (NumberFormatException e){
+                            } catch (Exception e){
                                 Log.d("ERROR", "Wrong user id format");
                                 qrValue.setText(userId);
                                 qrValue.setTextColor(Color.RED);
+
+                                final ImageView imageView = findViewById(R.id.imageView);
+                                imageView.setImageDrawable(getResources().getDrawable(R.drawable.ic_clear_black_24dp));
+                                imageView.setColorFilter(Color.RED);
+
+                                new CountDownTimer(1000, 1000) {
+
+                                    public void onTick(long millisUntilFinished) {
+                                    }
+
+                                    public void onFinish() {
+                                        imageView.setImageDrawable(null);
+                                    }
+                                }.start();
                             }
                         }
                     });
@@ -150,7 +166,7 @@ public class QRScanActivity extends AppCompatActivity {
         });
     }
 
-
+    /*
     @Override
     protected void onPause() {
         super.onPause();
@@ -161,7 +177,7 @@ public class QRScanActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         initialiseDetectorsAndSources();
-    }
+    }*/
 
     private void storeUserId(String userId){
         SharedPreferences preferences = getSharedPreferences(getString(R.string.preferences),MODE_PRIVATE);
@@ -183,17 +199,31 @@ public class QRScanActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void retry(){
-        Intent intent = new Intent(QRScanActivity.this, QRScanActivity.class);
-        startActivity(intent);
-    }
-
     private void done(){
+        if (userId == null){
+            if (checkForValidUserId(editText.getText().toString()))
+                userId = editText.getText().toString();
+            else
+                //TODO
+                userId = "123456";
+        }
+
+        storeUserId(userId);
+
         Intent intent = new Intent(QRScanActivity.this, MainActivity.class);
         startActivity(intent);
 
-        Toast toast = Toast.makeText(this, "Meldung erfolgreich erstellt!", Toast.LENGTH_SHORT);
+        Toast toast = Toast.makeText(this, "Meldung erfolgreich erstellt!\rUser-ID: " + userId, Toast.LENGTH_SHORT);
         toast.show();
+    }
+
+    private boolean checkForValidUserId(String userId){
+        try {
+            Integer.parseInt(userId);
+            return true;
+        } catch (NumberFormatException e){
+            return false;
+        }
     }
 }
 
