@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">CoronaTrackingApp</string>
-    
+
     <string name="getInTouch">Melden</string>
     <string name="bestPracticesPlaceholder">Best Practices:  \n Wie kann ich mich schützen?</string>
     <string name="back">Zurück</string>
