@@ -7,4 +7,12 @@
     <string name="userIdEditTextHint">Oder nutzen sie die Nutzer-ID</string>
     <string name="coronaContactNotificationText">Sie waren in nahem Kontakt zu einem Corona-Patienten. Bitte melden sie sich umgehend bei dem Gesundheitsamt unter der folgenden Telefonnummer: \n\n 089...</string>
 
+    //Key for out preferences instance
+    <string name="preferences">preferences</string>
+
+    //Key for storing the user-id
+    <string name="userId">userid</string>
+
+    //Key for set of other explored user-ids
+    <string name="otherIds">otherids</string>
 </resources>
