@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
         preferences = getApplicationContext().getSharedPreferences("MyPref",0);
         editor = preferences.edit();
 
-        if(preferences.getString(getString(R.string.userId), null).isEmpty()){
+        if(preferences.getString(getString(R.string.userId), null)==null){
             //TODO implement rest call to get user id
             //uid=
             //editor.putString(getString(R.string.userId), uid);
