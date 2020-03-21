@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="60dp"
         android:layout_marginTop="632dp"
-        android:text="Back"
+        android:text="@string/back"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -23,7 +23,7 @@
         android:layout_marginStart="84dp"
         android:layout_marginTop="556dp"
         android:ems="10"
-        android:hint="Oder nutzen sie die Nutzer-ID"
+        android:hint="@string/userIdEditTextHint"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
