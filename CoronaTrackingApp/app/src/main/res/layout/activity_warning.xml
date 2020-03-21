@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".WarningActivity">
+
+    <TextView
+        android:id="@+id/infizierungswarnung"
+        android:layout_width="263dp"
+        android:layout_height="163dp"
+        android:layout_marginTop="192dp"
+        android:layout_marginEnd="72dp"
+        android:text="Sie waren in nahem Kontakt zu einem Corona-Patienten. Bitte melden sie sich umgehend bei dem Gesundheitsamt unter der folgenden Telefonnummer: \n\n 089..."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="140dp"
+        android:layout_marginBottom="212dp"
+        android:text="ID: AFEG-5UB8-JS06"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</android.support.constraint.ConstraintLayout>
