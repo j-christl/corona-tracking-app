@@ -1,6 +1,7 @@
 package com.nikola.coronatrackingapp;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -11,6 +12,7 @@ import android.util.Log;
 import android.util.SparseArray;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,14 +28,14 @@ import java.util.Set;
 
 public class QRScanActivity extends AppCompatActivity {
 
+    Button retry;
+    Button back;
+    Button done;
     SurfaceView surfaceView;
     TextView qrValue;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
     private static final int REQUEST_CAMERA_PERMISSION = 201;
-    Button btnAction;
-    String intentData = "";
-    boolean isEmail = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +48,31 @@ public class QRScanActivity extends AppCompatActivity {
     private void initViews() {
         qrValue = findViewById(R.id.qrValue);
         surfaceView = findViewById(R.id.surfaceView);
+
+        retry = findViewById(R.id.retry);
+        back = findViewById(R.id.backButton);
+        done = findViewById(R.id.done);
+
+        retry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                retry();
+            }
+        });
+
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
+            }
+        });
+
+        done.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                done();
+            }
+        });
     }
 
     private void initialiseDetectorsAndSources() {
@@ -119,12 +146,6 @@ public class QRScanActivity extends AppCompatActivity {
                                 Log.d("ERROR", "Wrong user id format");
                                 qrValue.setText(userId);
                                 qrValue.setTextColor(Color.RED);
-                                try {
-                                    Thread.sleep(500);
-                                } catch (InterruptedException ex) {
-                                    ex.printStackTrace();
-                                }
-
                             }
 
 
@@ -162,6 +183,24 @@ public class QRScanActivity extends AppCompatActivity {
 
         editor.putStringSet(getString(R.string.otherIds), otherIds);
         editor.commit();
+    }
+
+    private void back(){
+        Intent intent = new Intent(QRScanActivity.this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    private void retry(){
+        Intent intent = new Intent(QRScanActivity.this, QRScanActivity.class);
+        startActivity(intent);
+    }
+
+    private void done(){
+        Intent intent = new Intent(QRScanActivity.this, MainActivity.class);
+        startActivity(intent);
+
+        Toast toast = Toast.makeText(this, "Meldung erfolgreich erstellt!", Toast.LENGTH_SHORT);
+        toast.show();
     }
 }
 
