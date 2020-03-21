@@ -11,6 +11,7 @@ import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.WriterException;
@@ -65,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
             jwt = extractJwtFromJson(json);
             Log.d("CoronaTrackingApp", "Extracted jwt: " + jwt);
 
-            Toast.makeText(this, uid, Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "First login, UID=" + uid, Toast.LENGTH_LONG).show();
+
             editor.putString(getString(R.string.userId), uid);
             editor.putString(getString(R.string.jwt), jwt);
             editor.commit();
@@ -73,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
             uid = preferences.getString(getString(R.string.userId),null);
             jwt = preferences.getString(getString(R.string.jwt),null);
         }
+        
+        ((TextView) findViewById(R.id.userIdLabel)).setText("UID: " + (uid != null ? uid : "-1"));
 
         WindowManager manager = (WindowManager) getSystemService(WINDOW_SERVICE);
         Display display = manager.getDefaultDisplay();
