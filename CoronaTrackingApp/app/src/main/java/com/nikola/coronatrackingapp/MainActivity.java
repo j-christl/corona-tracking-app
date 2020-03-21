@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
 
         qrImage = (ImageView) findViewById(R.id.qr_image);
         qrgEncoder = new QRGEncoder(
-                uid, null,
+                "jojojojo", null,
                 QRGContents.Type.TEXT,
                 smallerDimension);
         try {
