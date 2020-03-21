@@ -24,17 +24,21 @@
 
             <Button
                 android:id="@+id/backButton"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:drawableStart="@drawable/ic_arrow_back_black_24dp"
                 android:text="Zurück" />
 
             <Button
                 android:id="@+id/done"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Fertig" />
+                android:drawableEnd="@drawable/ic_send_black_24dp"
+                android:text="Senden" />
 
         </LinearLayout>
 
@@ -79,10 +83,12 @@
 
             <Button
                 android:id="@+id/retry"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="Done" />
+                android:drawableEnd="@drawable/ic_refresh_black_24dp"
+                android:text="Wiederholen" />
         </LinearLayout>
 
     </LinearLayout>

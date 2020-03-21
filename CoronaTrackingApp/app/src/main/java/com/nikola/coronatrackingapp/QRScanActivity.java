@@ -77,8 +77,6 @@ public class QRScanActivity extends AppCompatActivity {
 
     private void initialiseDetectorsAndSources() {
 
-        Toast.makeText(getApplicationContext(), "Barcode scanner started", Toast.LENGTH_SHORT).show();
-
         barcodeDetector = new BarcodeDetector.Builder(this)
                 .setBarcodeFormats(Barcode.ALL_FORMATS)
                 .build();
@@ -119,9 +117,7 @@ public class QRScanActivity extends AppCompatActivity {
 
         barcodeDetector.setProcessor(new Detector.Processor<Barcode>() {
             @Override
-            public void release() {
-                Toast.makeText(getApplicationContext(), "To prevent memory leaks barcode scanner has been stopped", Toast.LENGTH_SHORT).show();
-            }
+            public void release() {}
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
@@ -147,11 +143,8 @@ public class QRScanActivity extends AppCompatActivity {
                                 qrValue.setText(userId);
                                 qrValue.setTextColor(Color.RED);
                             }
-
-
                         }
                     });
-
                 }
             }
         });
