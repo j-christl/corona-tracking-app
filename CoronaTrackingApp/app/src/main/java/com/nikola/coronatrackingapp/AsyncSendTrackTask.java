@@ -33,16 +33,13 @@ public class AsyncSendTrackTask extends AsyncTask<String, Integer, Boolean> {
             String url = "http://18.196.201.130:8080/track?jwt=" + jwt;
             URL urlObj = new URL(url);
             conn = (HttpURLConnection) urlObj.openConnection();
-            conn.setDoOutput(true);
+            //conn.setDoOutput(true);
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Type", "application/json");
+            conn.setInstanceFollowRedirects(false);
             //conn.setRequestProperty("Content-Length", jsonStr.length() + "");
             conn.setReadTimeout(10000);
             conn.setConnectTimeout(15000);
-
-            // https://stackoverflow.com/questions/9365829/filenotfoundexception-for-httpurlconnection-in-ice-cream-sandwich
-            conn.setInstanceFollowRedirects(false);
-            
             conn.connect();
 
             PrintWriter pw = new PrintWriter(new OutputStreamWriter(conn.getOutputStream()));
@@ -57,8 +54,7 @@ public class AsyncSendTrackTask extends AsyncTask<String, Integer, Boolean> {
                 result.append(line);
             }
 
-            System.out.println("result from server:\n" + result.toString());
-            // TODO check status code if it worked. If so, return true. If not, return false
+            Log.d("Corona-Tracking-App", "result from server:\n" + result.toString());
             return true;
 
         } catch (IOException e) {
@@ -68,7 +64,6 @@ public class AsyncSendTrackTask extends AsyncTask<String, Integer, Boolean> {
                 conn.disconnect();
             }
         }
-
 
         return false;
     }
