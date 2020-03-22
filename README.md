@@ -7,5 +7,5 @@ Corona Tracking: Wie können Corona-infizierte/ getestete/ genesene Personen get
 ## Titel
 CoV-Trace: Eine Anwendung zur Infektionskettenermittlung mittels Handy-Daten unter Wahrung der Privatsphäre und des Datenschutzes
 
-## Note
+## Anmerkung / Note
 This app only works with its corresponding backend located at https://github.com/yoshc/corona-tracking-backend
