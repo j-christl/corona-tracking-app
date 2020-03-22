@@ -1,13 +1,14 @@
 package com.nikola.coronatrackingapp;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -17,7 +18,6 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -28,6 +28,7 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,8 +40,16 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
     private EditText editText;
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
-    private static final int REQUEST_CAMERA_PERMISSION = 201;
+
     private String userId;
+    private Timestamp timestamp;
+
+    private static final int REQUEST_CAMERA_PERMISSION = 201;
+
+    public static final int RESULT_OK = 0;
+    public static final int RESULT_MISSING = 1;
+    public static final String EXTRA_CODE_USER_ID = "userId";
+    public static final String EXTRA_CODE_TIMESTAMP = "timeStamp";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +57,14 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
         setContentView(R.layout.activity_q_r_scan);
 
         initViews();
-        initialiseDetectorsAndSources();
+
+            if (ActivityCompat.checkSelfPermission(QRScanActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+                initialiseDetectorsAndSources();
+            } else {
+                ActivityCompat.requestPermissions(QRScanActivity.this, new
+                        String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+            }
+
     }
 
     private void initViews() {
@@ -64,7 +80,6 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
                 back();
             }
         });
-
         done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,10 +171,8 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
                                 succesTextLabel.setText("Keine gültige User-ID!");
 
                                 new CountDownTimer(1000, 1000) {
-
                                     public void onTick(long millisUntilFinished) {
                                     }
-
                                     public void onFinish() {
                                         imageView.setImageDrawable(null);
                                         succesTextLabel.setTextColor(Color.BLACK);
@@ -209,20 +222,30 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
 
     private void done(){
         if (userId == null){
-            if (checkForValidUserId(editText.getText().toString()))
+            if (checkForValidUserId(editText.getText().toString())) {
                 userId = editText.getText().toString();
-            else
-                //TODO
-                userId = "123456";
+                storeUserId(userId);
+
+                Toast toast = Toast.makeText(this, "Meldung erfolgreich erstellt!\rUser-ID: " + userId, Toast.LENGTH_SHORT);
+                toast.show();
+
+                Intent returnIntent = new Intent();
+                returnIntent.putExtra(EXTRA_CODE_USER_ID, userId);
+                returnIntent.putExtra(EXTRA_CODE_TIMESTAMP, new Timestamp(System.currentTimeMillis()).toString());
+                setResult(RESULT_OK,returnIntent);
+                finish();
+            }
+            else {
+                Toast toast = Toast.makeText(this, "Ungültige User-ID.\rKeine Meldung erstellt!" + userId, Toast.LENGTH_SHORT);
+                toast.show();
+
+                Intent returnIntent = new Intent();
+                setResult(RESULT_MISSING, returnIntent);
+                finish();
+            }
         }
 
-        storeUserId(userId);
 
-        Intent intent = new Intent(QRScanActivity.this, MainActivity.class);
-        startActivity(intent);
-
-        Toast toast = Toast.makeText(this, "Meldung erfolgreich erstellt!\rUser-ID: " + userId, Toast.LENGTH_SHORT);
-        toast.show();
     }
 
     private boolean checkForValidUserId(String userId){
@@ -238,7 +261,18 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
                                            String[] permissions,
                                            int[] grantResults){
         Intent intent = new Intent(this, QRScanActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(EXTRA_CODE_USER_ID,data.getStringExtra(EXTRA_CODE_USER_ID));
+        returnIntent.putExtra(EXTRA_CODE_TIMESTAMP,data.getStringExtra(EXTRA_CODE_TIMESTAMP));
+        setResult(RESULT_OK,returnIntent);
+        finish();
     }
 }
 

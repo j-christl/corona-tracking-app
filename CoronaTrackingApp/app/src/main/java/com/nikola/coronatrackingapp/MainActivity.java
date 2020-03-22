@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.zxing.WriterException;
+import com.google.zxing.qrcode.encoder.QRCode;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -132,6 +134,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void melden(View view){
         Intent intent = new Intent(this, QRScanActivity.class);
-        startActivity(intent);
+        startActivityForResult(intent, 0);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if ( resultCode == QRScanActivity.RESULT_MISSING)
+            return;
+        else if ( resultCode == QRScanActivity.RESULT_OK ){
+            String userId = data.getStringExtra(QRScanActivity.EXTRA_CODE_USER_ID);
+            String timeStamp = data.getStringExtra(QRScanActivity.EXTRA_CODE_TIMESTAMP);
+
+            Log.d("RESULT", userId + " " + timeStamp);
+        }
+        else {
+            //Something went wrong :(
+        }
     }
 }
