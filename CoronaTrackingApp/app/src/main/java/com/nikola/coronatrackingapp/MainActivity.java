@@ -144,10 +144,19 @@ public class MainActivity extends AppCompatActivity {
         if ( resultCode == QRScanActivity.RESULT_MISSING)
             return;
         else if ( resultCode == QRScanActivity.RESULT_OK ){
-            String userId = data.getStringExtra(QRScanActivity.EXTRA_CODE_USER_ID);
+            String otherUserId = data.getStringExtra(QRScanActivity.EXTRA_CODE_USER_ID);
             String timeStamp = data.getStringExtra(QRScanActivity.EXTRA_CODE_TIMESTAMP);
 
-            Log.d("RESULT", userId + " " + timeStamp);
+            boolean worked = false;
+            try {
+                worked = new AsyncSendTrackTask().execute(jwt, otherUserId, timeStamp).get();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            Toast.makeText(this, worked ? " Sent track to server" : "Failed sending track to server", Toast.LENGTH_LONG).show();
+            Log.d("RESULT", "SENT: " + otherUserId + " " + timeStamp + " => worked=" + worked);
         }
         else {
             //Something went wrong :(

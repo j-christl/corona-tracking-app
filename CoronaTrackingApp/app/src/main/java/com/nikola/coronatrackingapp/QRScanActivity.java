@@ -58,12 +58,12 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
 
         initViews();
 
-            if (ActivityCompat.checkSelfPermission(QRScanActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-                initialiseDetectorsAndSources();
-            } else {
-                ActivityCompat.requestPermissions(QRScanActivity.this, new
-                        String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
-            }
+        if (ActivityCompat.checkSelfPermission(QRScanActivity.this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            initialiseDetectorsAndSources();
+        } else {
+            ActivityCompat.requestPermissions(QRScanActivity.this, new
+                    String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+        }
 
     }
 
@@ -139,7 +139,7 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
                         @Override
                         public void run() {
                             Log.d("WICHTIG",barcodes.valueAt(0).displayValue);
-                            String userId = barcodes.valueAt(0).displayValue;
+                            userId = barcodes.valueAt(0).displayValue;
                             try {
 
                                 Integer.parseInt(userId);
@@ -225,15 +225,6 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
             if (checkForValidUserId(editText.getText().toString())) {
                 userId = editText.getText().toString();
                 storeUserId(userId);
-
-                Toast toast = Toast.makeText(this, "Meldung erfolgreich erstellt!\rUser-ID: " + userId, Toast.LENGTH_SHORT);
-                toast.show();
-
-                Intent returnIntent = new Intent();
-                returnIntent.putExtra(EXTRA_CODE_USER_ID, userId);
-                returnIntent.putExtra(EXTRA_CODE_TIMESTAMP, new Timestamp(System.currentTimeMillis()).toString());
-                setResult(RESULT_OK,returnIntent);
-                finish();
             }
             else {
                 Toast toast = Toast.makeText(this, "Ungültige User-ID.\rKeine Meldung erstellt!" + userId, Toast.LENGTH_SHORT);
@@ -242,9 +233,19 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
                 Intent returnIntent = new Intent();
                 setResult(RESULT_MISSING, returnIntent);
                 finish();
+
+                return;
             }
         }
 
+        Toast toast = Toast.makeText(this, "Meldung erfolgreich erstellt!\rUser-ID: " + userId, Toast.LENGTH_SHORT);
+        toast.show();
+
+        Intent returnIntent = new Intent();
+        returnIntent.putExtra(EXTRA_CODE_USER_ID, userId);
+        returnIntent.putExtra(EXTRA_CODE_TIMESTAMP, new Timestamp(System.currentTimeMillis()).toString());
+        setResult(RESULT_OK,returnIntent);
+        finish();
 
     }
 
