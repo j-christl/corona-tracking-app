@@ -40,11 +40,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200px"
-            android:layout_marginTop="200px"
-            android:text="Name:"
+            android:layout_marginTop="100px"
+            android:text="Vorname:"
             android:textColor="#000000"></TextView>
-        
+
         <EditText
+            android:id="@+id/sendFirstName"
+            android:layout_width="500px"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200px"
+            android:textColor="#000000"></EditText>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="200px"
+            android:layout_marginTop="50px"
+            android:text="Nachname:"
+            android:textColor="#000000"></TextView>
+
+        <EditText
+            android:id="@+id/sendLastName"
             android:layout_width="500px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200px"
@@ -59,6 +75,7 @@
             android:textColor="#000000"></TextView>
 
         <EditText
+            android:id="@+id/sendNumber"
             android:layout_width="500px"
             android:layout_height="wrap_content"
             android:layout_marginLeft="200px"
@@ -70,6 +87,7 @@
             android:layout_marginLeft="200px"
             android:layout_marginTop="50px"
             android:text="Absenden"
+            android:onClick="sendData"
             android:id="@+id/buttonSend"></Button>
 
     </LinearLayout>
