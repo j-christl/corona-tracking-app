@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Display;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -100,6 +101,25 @@ public class MainActivity extends AppCompatActivity {
         } catch (WriterException e) {
             Log.v(TAG, e.toString());
         }
+
+        checkUserStatus();
+
+    }
+
+    private void checkUserStatus() {
+        String result = "NOT INITIALIZED";
+        try {
+            result = new AsyncGetUserStatusTask().execute(jwt).get();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        Toast.makeText(this, result, Toast.LENGTH_LONG).show();
+        Log.d("Corona-Tracking-App", "Result: " + result);
+        if(result.equals("4")) {
+            ((Button)findViewById(R.id.importantButton)).setVisibility(View.VISIBLE);
+        }
     }
 
     private String extractUidFromJson(String jsonString) {
@@ -161,5 +181,10 @@ public class MainActivity extends AppCompatActivity {
         else {
             //Something went wrong :(
         }
+    }
+
+    public void importantButtonClick(View view) {
+        Intent intent = new Intent(this, ContactActivity.class);
+        startActivityForResult(intent, 0);
     }
 }

@@ -17,6 +17,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".WarningActivity"></activity>
+        <activity android:name=".ContactActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
         <activity android:name=".QRScanActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
         <activity android:name=".MainActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>

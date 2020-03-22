@@ -67,6 +67,18 @@
             android:textAlignment="center"
             android:textColor="#00069B" />
 
+        <Button
+            android:id="@+id/importantButton"
+            android:layout_width="match_parent"
+            android:layout_height="150px"
+            android:layout_marginLeft="200px"
+            android:layout_marginRight="200px"
+            android:text="WICHTIG!"
+            android:background="#DE0000"
+            android:visibility="invisible"
+            android:textAlignment="center"
+            android:onClick="importantButtonClick"/>
+
     </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
