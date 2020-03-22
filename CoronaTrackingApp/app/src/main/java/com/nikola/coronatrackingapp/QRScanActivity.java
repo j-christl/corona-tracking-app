@@ -96,7 +96,7 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
 
         cameraSource = new CameraSource.Builder(this, barcodeDetector)
                 .setRequestedPreviewSize(1920, 1080)
-                .setAutoFocusEnabled(true) //you should add this feature
+                .setAutoFocusEnabled(true)
                 .build();
 
         surfaceView.getHolder().addCallback(new SurfaceHolder.Callback() {
@@ -109,15 +109,13 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
                         ActivityCompat.requestPermissions(QRScanActivity.this, new
                                 String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
                     }
-
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             }
 
             @Override
-            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-            }
+            public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {}
 
             @Override
             public void surfaceDestroyed(SurfaceHolder holder) {
@@ -138,7 +136,6 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
                     qrValue.post(new Runnable() {
                         @Override
                         public void run() {
-                            Log.d("WICHTIG",barcodes.valueAt(0).displayValue);
                             userId = barcodes.valueAt(0).displayValue;
                             try {
 
@@ -158,7 +155,6 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
 
                                 cameraSource.stop();
                             } catch (Exception e){
-                                Log.d("ERROR", "Wrong user id format");
                                 qrValue.setText(userId);
                                 qrValue.setTextColor(Color.RED);
 
