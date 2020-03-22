@@ -46,8 +46,8 @@ public class QRScanActivity extends AppCompatActivity implements ActivityCompat.
 
     private static final int REQUEST_CAMERA_PERMISSION = 201;
 
-    public static final int RESULT_OK = 0;
-    public static final int RESULT_MISSING = 1;
+    public static final int RESULT_OK = 1001;
+    public static final int RESULT_MISSING = 1002;
     public static final String EXTRA_CODE_USER_ID = "userId";
     public static final String EXTRA_CODE_TIMESTAMP = "timeStamp";
 
