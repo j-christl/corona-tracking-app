@@ -163,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if ( resultCode == QRScanActivity.RESULT_MISSING)
+            //No result. Do nothing.
             return;
         else if ( resultCode == QRScanActivity.RESULT_OK ){
             String otherUserId = data.getStringExtra(QRScanActivity.EXTRA_CODE_USER_ID);
@@ -177,7 +178,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
             Toast.makeText(this, worked ? " Sent track to server" : "Failed sending track to server", Toast.LENGTH_LONG).show();
-            Log.d("RESULT", "SENT: " + otherUserId + " " + timeStamp + " => worked=" + worked);
         }
         else {
             //Something went wrong :(
