@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Point;
+import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -186,5 +187,11 @@ public class MainActivity extends AppCompatActivity {
     public void importantButtonClick(View view) {
         Intent intent = new Intent(this, ContactActivity.class);
         startActivityForResult(intent, 0);
+    }
+
+    public void bestPracticesClick(View view){
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse("https://www.bundesgesundheitsministerium.de/coronavirus.html"));
+        startActivity(intent);
     }
 }

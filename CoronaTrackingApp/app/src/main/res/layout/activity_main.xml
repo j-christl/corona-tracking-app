@@ -58,14 +58,17 @@
             android:textAlignment="center"
             android:onClick="melden"/>
 
-        <TextView
+        <Button
             android:id="@+id/urlPlatzHalter"
             android:layout_width="match_parent"
-            android:layout_height="200px"
-            android:paddingTop="20px"
+            android:layout_height="84dp"
+            android:layout_marginLeft="200px"
+            android:layout_marginRight="200px"
             android:text="@string/bestPracticesPlaceholder"
             android:textAlignment="center"
-            android:textColor="#00069B" />
+            android:textColor="#00069B"
+            android:background="?android:attr/selectableItemBackground"
+            android:onClick="bestPracticesClick"/>
 
         <Button
             android:id="@+id/importantButton"
